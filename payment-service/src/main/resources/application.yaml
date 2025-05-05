@@ -1,0 +1,13 @@
+server:
+  port: 8081
+
+spring:
+  liquibase:
+    change-log: classpath:db/master.xml
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment-service
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
