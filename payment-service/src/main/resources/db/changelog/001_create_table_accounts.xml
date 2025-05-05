@@ -5,10 +5,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="2025-05-05 16:31:00" author="denis">
-        <sqlFile path="create-interest-accruals/create_table_interest_accruals.sql"
+        <sqlFile path="create-accounts/create_table_accounts.sql"
                  relativeToChangelogFile="true"/>
         <rollback>
-            <sqlFile path="create-interest-accruals/rollback/create_table_interest_accruals_rollback.sql"
+            <sqlFile path="create-accounts/rollback/create_table_accounts_rollback.sql"
                      relativeToChangelogFile="true"/>
         </rollback>
     </changeSet>
