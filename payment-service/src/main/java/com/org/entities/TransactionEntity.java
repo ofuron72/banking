@@ -1,10 +1,13 @@
 package com.org.entities;
 
+import com.org.objects.TransactionsStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,23 +30,28 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Builder
 @Entity
-@Table(name = "accounts")
-public class AccountEntity {
-    @Id
+@Table(name = "transactions")
+public class TransactionEntity {
     @Column(name = "id")
+    @Id
     private UUID id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    @ManyToOne
+    @JoinColumn(name = "from_account")
+    private AccountEntity fromAccount;
 
-    @Column(name = "balance")
-    private BigDecimal balance;
+    @ManyToOne
+    @JoinColumn(name = "to_account")
+    private AccountEntity toAccount;
 
-    @Column(name = "initial_deposit")
-    private BigDecimal initialDeposit;
+    @Column(name = "amount")
+    private BigDecimal amount;
 
     @CreationTimestamp
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    @Column(name = "timestamp")
+    private LocalDateTime timestamp;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private TransactionsStatus status;
 }
