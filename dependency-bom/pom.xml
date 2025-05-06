@@ -23,6 +23,7 @@
         <api.jjwt.version>0.11.5</api.jjwt.version>
         <liquibase.version>4.31.1</liquibase.version>
         <mapstruct.version>1.6.3</mapstruct.version>
+        <hibernate.jpamodelgen.version>6.6.11.Final</hibernate.jpamodelgen.version>
     </properties>
 
     <dependencyManagement>
@@ -39,6 +40,19 @@
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
                 <version>${liquibase.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate.orm</groupId>
+                <artifactId>hibernate-jpamodelgen</artifactId>
+                <version>${hibernate.jpamodelgen.version}</version> <!-- проверь актуальную версию -->
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

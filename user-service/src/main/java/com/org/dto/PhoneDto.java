@@ -1,4 +1,11 @@
 package com.org.dto;
 
-public record PhoneDto() {
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+public record PhoneDto(
+        UUID userId,
+        String number,
+        LocalDateTime createdAt
+) {
 }

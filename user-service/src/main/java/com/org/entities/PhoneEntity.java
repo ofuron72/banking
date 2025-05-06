@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +16,6 @@ import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -45,10 +42,4 @@ public class PhoneEntity {
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
-    @OneToMany(mappedBy = "user")
-    private List<PhoneEntity> phones = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<EmailEntity> emails = new ArrayList<>();
 }
