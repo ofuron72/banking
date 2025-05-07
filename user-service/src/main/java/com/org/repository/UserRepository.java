@@ -1,6 +1,7 @@
 package com.org.repository;
 
 import com.org.entities.UserEntity;
+import com.org.entities.UserEntity_;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -28,9 +29,10 @@ public class UserRepository {
 
         Root<UserEntity> root = cq.from(UserEntity.class);
 
-        cq.where(cb.equal(root.get("id"), id));
+        cq.where(cb.equal(root.get(UserEntity_.id), id));
 
         return entityManager.createQuery(cq).getSingleResult();
     }
+
 
 }

@@ -6,6 +6,7 @@ import com.org.entities.UserEntity_;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaDelete;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
@@ -23,18 +24,6 @@ public class EmailRepository{
 
     public void save(EmailEntity email){
         entityManager.persist(email);
-    }
-
-    public EmailEntity findByEmail(String email){
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-
-        CriteriaQuery<EmailEntity> cq = cb.createQuery(EmailEntity.class);
-
-        Root<EmailEntity> root = cq.from(EmailEntity.class);
-
-        cq.select(root).where(cb.equal(root.get(EmailEntity_.email), email));
-
-        return entityManager.createQuery(cq).getSingleResult();
     }
 
     public EmailEntity findByUserId(UUID userId){
@@ -75,5 +64,30 @@ public class EmailRepository{
         criteria.select(root);
 
         return entityManager.createQuery(criteria).getResultList();
+    }
+
+    public void addEmail(EmailEntity email){
+        entityManager.persist(email);
+    }
+
+    public EmailEntity getEmailByAddress(String address){
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<EmailEntity> cq = cb.createQuery(EmailEntity.class);
+
+        Root<EmailEntity> root = cq.from(EmailEntity.class);
+
+        cq.select(root).where(cb.equal(root.get(EmailEntity_.email), address));
+
+        return entityManager.createQuery(cq).getSingleResult();
+    }
+
+    public void deleteEmailByAddress(String address){
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaDelete<EmailEntity> delete = cb.createCriteriaDelete(EmailEntity.class);
+        Root<EmailEntity> root = delete.from(EmailEntity.class);
+
+        delete.where(cb.equal(root.get(EmailEntity_.email), address));
+        entityManager.createQuery(delete).executeUpdate();
     }
 }

@@ -1,8 +1,8 @@
 package com.org.service;
 
 import com.org.dto.PhoneAddRequestDto;
-import com.org.dto.PhoneAddResponseDto;
 import com.org.dto.PhoneDto;
+import com.org.dto.PhoneResponseDto;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,8 +12,10 @@ public interface PhoneService {
 
     List<PhoneDto> getAllPhonesByUserId(UUID userId);
 
-    PhoneAddResponseDto addNumber(PhoneAddRequestDto phone);
+    PhoneResponseDto addNumber(PhoneAddRequestDto phone);
 
-    void deletePhoneById(UUID phoneId);
+    void deletePhoneByNumber(String phoneId);
+
+    PhoneDto getPhoneByNumber(String number);
 
 }
