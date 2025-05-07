@@ -1,4 +1,4 @@
-package com.org.converters;
+package com.org.converters.user;
 
 import com.org.dto.RegisterUserDto;
 import com.org.dto.RegisterUserResponseDto;

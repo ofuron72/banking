@@ -1,6 +1,11 @@
 package com.org.service;
 
-import com.org.converters.PhoneDtoToEntityMapper;
+import com.org.converters.phone.PhoneDtoToEntityMapper;
+
+import com.org.converters.phone.PhoneDtoToResponseMapper;
+import com.org.converters.phone.RequestPhoneToDtoMapper;
+import com.org.dto.PhoneAddRequestDto;
+import com.org.dto.PhoneAddResponseDto;
 import com.org.dto.PhoneDto;
 import com.org.entities.PhoneEntity;
 import com.org.entities.UserEntity;
@@ -21,6 +26,8 @@ public class PhoneServiceImpl implements PhoneService {
     private final PhoneRepository phoneRepository;
     private final PhoneDtoToEntityMapper phoneDtoToEntityMapper;
     private final UserRepository userRepository;
+    private final PhoneDtoToResponseMapper phoneDtoToResponseMapper;
+    private final RequestPhoneToDtoMapper requestPhoneToDtoMapper;
 
     @Override
     public void create(PhoneDto phone) {
@@ -40,4 +47,19 @@ public class PhoneServiceImpl implements PhoneService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public PhoneAddResponseDto addNumber(PhoneAddRequestDto phone) {
+        var dto = requestPhoneToDtoMapper.mapToDto(phone);
+        var entity = phoneDtoToEntityMapper.toEntity(dto);
+        entity.setId(UUID.randomUUID());
+        UserEntity userEntity = userRepository.getUserById(phone.userId());
+        entity.setUser(userEntity);
+        phoneRepository.addPhone(entity);
+        return phoneDtoToResponseMapper.mapToRequestDto(dto);
+    }
+
+    @Override
+    public void deletePhoneById(UUID phoneId) {
+
+    }
 }

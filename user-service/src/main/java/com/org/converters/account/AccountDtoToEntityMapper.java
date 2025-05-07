@@ -1,4 +1,4 @@
-package com.org.converters;
+package com.org.converters.account;
 import com.org.dto.AccountDto;
 import com.org.entities.AccountEntity;
 import org.mapstruct.Mapper;

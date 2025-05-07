@@ -1,4 +1,4 @@
-package com.org.converters;
+package com.org.converters.phone;
 
 import com.org.dto.PhoneDto;
 import com.org.dto.RegisterUserDto;

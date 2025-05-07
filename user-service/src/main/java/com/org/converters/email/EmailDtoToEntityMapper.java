@@ -1,4 +1,4 @@
-package com.org.converters;
+package com.org.converters.email;
 
 import com.org.dto.EmailDto;
 import com.org.entities.EmailEntity;

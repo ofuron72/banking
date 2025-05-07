@@ -1,12 +1,12 @@
 package com.org.orchestrator;
 
-import com.org.converters.RegisterRequestDtoToUserDtoMapper;
-import com.org.converters.RegisterUserDtoToAccountDtoMapper;
-import com.org.converters.RegisterUserDtoToEmailDtoMapper;
-import com.org.converters.RegisterUserDtoToPhoneDtoMapper;
-import com.org.converters.RegisterUserDtoToResponseDtoMapper;
-import com.org.converters.RegisterUserRequestDtoToRegisterUserDtoMapper;
-import com.org.converters.UserProjectionMapper;
+import com.org.converters.user.RegisterRequestDtoToUserDtoMapper;
+import com.org.converters.account.RegisterUserDtoToAccountDtoMapper;
+import com.org.converters.email.RegisterUserDtoToEmailDtoMapper;
+import com.org.converters.phone.RegisterUserDtoToPhoneDtoMapper;
+import com.org.converters.user.RegisterUserDtoToResponseDtoMapper;
+import com.org.converters.user.RegisterUserRequestDtoToRegisterUserDtoMapper;
+import com.org.converters.user.UserProjectionMapper;
 import com.org.dto.AccountDto;
 import com.org.dto.EmailDto;
 import com.org.dto.PhoneDto;

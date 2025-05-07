@@ -1,6 +1,6 @@
 package com.org.service;
 
-import com.org.converters.EmailDtoToEntityMapper;
+import com.org.converters.email.EmailDtoToEntityMapper;
 import com.org.dto.EmailDto;
 import com.org.entities.EmailEntity;
 import com.org.entities.UserEntity;

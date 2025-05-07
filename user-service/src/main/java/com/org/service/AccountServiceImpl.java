@@ -1,6 +1,6 @@
 package com.org.service;
 
-import com.org.converters.AccountDtoToEntityMapper;
+import com.org.converters.account.AccountDtoToEntityMapper;
 import com.org.dto.AccountDto;
 import com.org.entities.AccountEntity;
 import com.org.entities.UserEntity;

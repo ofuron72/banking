@@ -1,6 +1,6 @@
 package com.org.service;
 
-import com.org.converters.UserDtoToEntityMapper;
+import com.org.converters.user.UserDtoToEntityMapper;
 import com.org.dto.UserDto;
 import com.org.entities.UserEntity;
 import com.org.repository.UserRepository;

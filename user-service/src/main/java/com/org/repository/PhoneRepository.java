@@ -51,4 +51,8 @@ public class PhoneRepository {
         return entityManager.createQuery(criteria).getResultList();
     }
 
+    public void addPhone(PhoneEntity phone){
+       entityManager.persist(phone);
+    }
+
 }
