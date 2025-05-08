@@ -11,8 +11,11 @@ import com.org.orchestrator.UserFacade;
 import com.org.orchestrator.UserOrchestrator;
 import com.org.service.EmailService;
 import com.org.service.PhoneService;
+import com.org.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,8 +24,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,6 +40,7 @@ public class UserController {
     private final UserFacade userFacade;
     private final PhoneService phoneService;
     private final EmailService emailService;
+    private final UserService userService;
 
     @PostMapping("/register")
     public ResponseEntity<RegisterUserResponseDto> registerUser(@Valid @RequestBody RegisterUserRequestDto registerUserRequestDto) {
@@ -49,7 +55,7 @@ public class UserController {
     }
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAllUsers() {
-        var response = userFacade.getAllUsers();
+        var response = userService.getAllUsers();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -76,5 +82,20 @@ public class UserController {
         emailService.deleteEmailByAddress(email);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<UserResponseDto>> getAllUsersWithFilter(
+            @RequestParam(required = false) LocalDate birthDate,
+            @RequestParam(required = false) String fullName,
+            @RequestParam(required = false) String number,
+            @RequestParam(required = false) String email,
+            Pageable pageable
+            ){
+        var page =  userService.getUsersWithFilter(birthDate, fullName, number, email,
+                pageable);
+        return new ResponseEntity<>(page, HttpStatus.OK);
+    }
+
+
 
 }

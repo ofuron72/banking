@@ -15,7 +15,6 @@ import com.org.dto.RegisterUserRequestDto;
 import com.org.dto.RegisterUserResponseDto;
 import com.org.dto.UserDto;
 import com.org.dto.UserResponseDto;
-import com.org.objects.UserProjection;
 import com.org.repository.CustomRepository;
 import com.org.service.AccountService;
 import com.org.service.EmailService;
@@ -42,8 +41,6 @@ public class UserFacadeImpl implements UserFacade {
     private final RegisterUserDtoToAccountDtoMapper registerUserDtoToAccountDtoMapper;
     private final RegisterUserDtoToEmailDtoMapper registerUserDtoToEmailDtoMapper;
     private final RegisterUserDtoToPhoneDtoMapper registerUserDtoToPhoneDtoMapper;
-    private final UserProjectionMapper userProjectionMapper;
-    private final CustomRepository customRepository;
 
     @Override
     public RegisterUserResponseDto registerUser(RegisterUserRequestDto registerUserRequestDto) {
@@ -94,10 +91,5 @@ public class UserFacadeImpl implements UserFacade {
         return responseDto;
     }
 
-    @Override
-    public List<UserResponseDto> getAllUsers() {
-        List<UserProjection> listProjection = customRepository.getAllUserProjections();
 
-        return listProjection.stream().map(userProjectionMapper::toResponseDto).toList();
-    }
 }

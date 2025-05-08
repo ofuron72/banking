@@ -5,12 +5,10 @@ import com.org.dto.RegisterUserResponseDto;
 import com.org.dto.UserResponseDto;
 
 import java.util.UUID;
-import java.util.List;
 
 public interface UserFacade {
     RegisterUserResponseDto registerUser(RegisterUserRequestDto registerUserRequestDto);
 
     UserResponseDto getUserById(UUID userId);
 
-    List<UserResponseDto> getAllUsers();
 }

@@ -3,6 +3,7 @@ package com.org.repository;
 import com.org.entities.UserEntity;
 import com.org.entities.UserEntity_;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Repository
 public class UserRepository {
 
+    @PersistenceContext
     private final EntityManager entityManager;
 
     public UUID saveUser(UserEntity user) {
