@@ -6,27 +6,31 @@ import com.org.converters.email.RegisterUserDtoToEmailDtoMapper;
 import com.org.converters.phone.RegisterUserDtoToPhoneDtoMapper;
 import com.org.converters.user.RegisterUserDtoToResponseDtoMapper;
 import com.org.converters.user.RegisterUserRequestDtoToRegisterUserDtoMapper;
-import com.org.converters.user.UserProjectionMapper;
 import com.org.dto.AccountDto;
+import com.org.dto.EmailAddRequestDto;
 import com.org.dto.EmailDto;
+import com.org.dto.EmailResponseDto;
+import com.org.dto.PhoneAddRequestDto;
 import com.org.dto.PhoneDto;
+import com.org.dto.PhoneResponseDto;
 import com.org.dto.RegisterUserDto;
 import com.org.dto.RegisterUserRequestDto;
 import com.org.dto.RegisterUserResponseDto;
 import com.org.dto.UserDto;
 import com.org.dto.UserResponseDto;
-import com.org.repository.CustomRepository;
-import com.org.service.AccountService;
-import com.org.service.EmailService;
-import com.org.service.PhoneService;
-import com.org.service.UserService;
+import com.org.services.AccountService;
+import com.org.services.EmailService;
+import com.org.services.PhoneService;
+import com.org.services.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -42,6 +46,11 @@ public class UserFacadeImpl implements UserFacade {
     private final RegisterUserDtoToEmailDtoMapper registerUserDtoToEmailDtoMapper;
     private final RegisterUserDtoToPhoneDtoMapper registerUserDtoToPhoneDtoMapper;
 
+    /**
+     * @param registerUserRequestDto
+     * разбивается на AccountDto, UserDto, EmailDto, PhoneDto
+     * и сохраняется в таблицы
+     */
     @Override
     public RegisterUserResponseDto registerUser(RegisterUserRequestDto registerUserRequestDto) {
         var userId = userService.createUser(registerRequestDtoToUserDtoMapper
@@ -88,8 +97,38 @@ public class UserFacadeImpl implements UserFacade {
                 .balance(accountDto.balance())
                 .initialDeposit(accountDto.initialDeposit())
                 .build();
+        log.debug("getUserById: {}", responseDto);
         return responseDto;
     }
 
+    @Override
+    public List<UserResponseDto> getAllUsers() {
+        var result = userService.getAllUsers();
+        log.debug("getAllUsers: {}", result);
+        return result;
+    }
 
+    @Override
+    public PhoneResponseDto addNumber(PhoneAddRequestDto phoneAddRequestDto) {
+        var result = phoneService.addNumber(phoneAddRequestDto);
+        log.debug("addNumber: {}", result);
+        return result;
+    }
+
+    @Override
+    public void deletePhoneByNumber(String number) {
+        phoneService.deletePhoneByNumber(number);
+    }
+
+    @Override
+    public void deleteEmailByAddress(String number) {
+        emailService.deleteEmailByAddress(number);
+    }
+
+    @Override
+    public EmailResponseDto addEmail(EmailAddRequestDto emailAddRequestDto) {
+        var result = emailService.addEmail(emailAddRequestDto);
+        log.debug("addEmail: {}", result);
+        return result;
+    }
 }

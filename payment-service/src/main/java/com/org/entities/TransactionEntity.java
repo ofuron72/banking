@@ -1,10 +1,7 @@
 package com.org.entities;
 
-import com.org.objects.TransactionsStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -50,8 +47,4 @@ public class TransactionEntity {
     @CreationTimestamp
     @Column(name = "timestamp")
     private LocalDateTime timestamp;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private TransactionsStatus status;
 }

@@ -9,7 +9,7 @@ public record EmailAddRequestDto(
         @NotNull
         UUID userId,
         @NotNull
-                @Email
+        @Email
         String email
 ) {
 }

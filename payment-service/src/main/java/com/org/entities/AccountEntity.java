@@ -39,7 +39,7 @@ public class AccountEntity {
     private BigDecimal balance;
 
     @Column(name = "initial_deposit")
-    private BigDecimal deposit;
+    private BigDecimal initialDeposit;
 
     @CreationTimestamp
     @Column(name = "created_at")

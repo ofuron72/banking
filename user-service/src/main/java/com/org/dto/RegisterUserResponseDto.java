@@ -8,7 +8,6 @@ public record RegisterUserResponseDto(
         UUID id,
         String fullName,
         LocalDate birthDate,
-        String phone,
         String email,
         BigDecimal initialDeposit) {
 

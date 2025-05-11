@@ -23,13 +23,14 @@ import java.util.UUID;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
 @Entity
 @Table(name = "user_phones")
 public class PhoneEntity {
     @Id
     @Column(name = "id")
+    @EqualsAndHashCode.Include
     private UUID id;
 
     @ManyToOne
@@ -40,6 +41,6 @@ public class PhoneEntity {
     private String number;
 
     @CreationTimestamp
-    @Column(name = "created_at")
+    @Column(name = "created_at",insertable = false,updatable = false)
     private LocalDateTime createdAt;
 }

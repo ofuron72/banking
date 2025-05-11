@@ -40,6 +40,6 @@ public class EmailEntity {
     private String email;
 
     @CreationTimestamp
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false, insertable = false)
     private LocalDateTime createdAt;
 }

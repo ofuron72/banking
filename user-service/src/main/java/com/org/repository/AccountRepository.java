@@ -11,33 +11,25 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.UUID;
 
+@Transactional(readOnly = true)
 @Repository
 @RequiredArgsConstructor
 public class AccountRepository {
     @PersistenceContext
     private final EntityManager entityManager;
 
+    @Transactional
     public void save(AccountEntity account){
         entityManager.persist(account);
     }
 
-    public AccountEntity findById(UUID id){
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-
-        CriteriaQuery<AccountEntity> cq = cb.createQuery(AccountEntity.class);
-
-        Root<AccountEntity> root = cq.from(AccountEntity.class);
-
-        cq.select(root).where(cb.equal(root.get(AccountEntity_.id),id));
-
-        return entityManager.createQuery(cq).getSingleResult();
-    }
-
-    public AccountEntity findByUserId(UUID userId){
+    public Optional<AccountEntity> findByUserId(UUID userId){
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
         CriteriaQuery<AccountEntity> cq = cb.createQuery(AccountEntity.class);
@@ -47,30 +39,54 @@ public class AccountRepository {
         cq.select(root).where(cb.equal(root.get(AccountEntity_.user)
                 .get(UserEntity_.id), userId ));
 
-        return entityManager.createQuery(cq).getSingleResult();
+        return Optional.ofNullable(entityManager.createQuery(cq).getSingleResult());
     }
 
-    public List<AccountEntity> getAll() {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+    @Transactional
+    public Boolean decreaseBalance(UUID userId, BigDecimal amount) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 
-        CriteriaQuery<AccountEntity> criteria = cb.createQuery(AccountEntity.class);
+        var criteriaUpdate = criteriaBuilder
+                .createCriteriaUpdate(AccountEntity.class);
 
-        Root<AccountEntity> root = criteria.from(AccountEntity.class);
+        var root = criteriaUpdate.from(AccountEntity.class);
 
-        criteria.select(root);
+        Predicate condition = criteriaBuilder.greaterThanOrEqualTo(root
+                .get(AccountEntity_.balance), amount);
 
-        return entityManager.createQuery(criteria).getResultList();
+        Predicate correctUser = criteriaBuilder.equal(root.get(AccountEntity_.user)
+                .get(UserEntity_.id), userId );
+
+        criteriaUpdate.set(root.get(AccountEntity_.balance),
+                        criteriaBuilder.diff(root.get(AccountEntity_.balance),
+                                criteriaBuilder.literal(amount)))
+                .where(
+                        criteriaBuilder.and(
+                                correctUser,
+                                condition)
+                );
+
+        int updateRows = entityManager.createQuery(criteriaUpdate).executeUpdate();
+
+        return updateRows == 1;
     }
 
-    public List<AccountEntity> getAccountsByUserIds(List<UUID> userIds) {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<AccountEntity> cq = cb.createQuery(AccountEntity.class);
-        Root<AccountEntity> accountRoot = cq.from(AccountEntity.class);
+    @Transactional
+    public void increaseBalance(UUID userId, BigDecimal amount) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 
-        Predicate predicate = accountRoot.get("userId").in(userIds);
-        cq.where(predicate);
+        var criteriaUpdate = criteriaBuilder.createCriteriaUpdate(AccountEntity.class);
 
-        return entityManager.createQuery(cq).getResultList();
+        var root = criteriaUpdate.from(AccountEntity.class);
+
+        criteriaUpdate
+                .set(root.get(AccountEntity_.balance),
+                        criteriaBuilder.sum(root.get(AccountEntity_.balance),
+                                criteriaBuilder.literal(amount)))
+                .where(criteriaBuilder.equal((root.get(AccountEntity_.user)
+                        .get(UserEntity_.id)), userId));
+
+        entityManager.createQuery(criteriaUpdate).executeUpdate();
     }
 
 

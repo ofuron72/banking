@@ -11,3 +11,34 @@ spring:
     password: postgres
     driver-class-name: org.postgresql.Driver
 
+  kafka:
+    bootstrap-servers: localhost:29092
+    consumer:
+      auto-offset-reset: earliest
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      isolation-level: read_committed
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+kafka:
+  topic:
+    account:
+      name:
+        createAccountTopic
+      partitions: 1
+      replicas: 1
+
+    transaction:
+      name:
+        completeTransactionTopic
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+

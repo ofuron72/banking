@@ -7,11 +7,8 @@ import com.org.dto.PhoneResponseDto;
 import com.org.dto.RegisterUserRequestDto;
 import com.org.dto.RegisterUserResponseDto;
 import com.org.dto.UserResponseDto;
-import com.org.orchestrator.UserFacade;
 import com.org.orchestrator.UserOrchestrator;
-import com.org.service.EmailService;
-import com.org.service.PhoneService;
-import com.org.service.UserService;
+import com.org.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,9 +34,6 @@ import java.util.UUID;
 public class UserController {
 
     private final UserOrchestrator userOrchestrator;
-    private final UserFacade userFacade;
-    private final PhoneService phoneService;
-    private final EmailService emailService;
     private final UserService userService;
 
     @PostMapping("/register")
@@ -50,36 +44,36 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> getUserById(@PathVariable("id") UUID id) {
-        var response = userFacade.getUserById(id);
+        var response = userOrchestrator.getUserById(id);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAllUsers() {
-        var response = userService.getAllUsers();
+        var response = userOrchestrator.getAlLUsers();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/addNumber")
     public ResponseEntity<PhoneResponseDto> addNumber(@Valid @RequestBody PhoneAddRequestDto phoneAddRequestDto) {
-        var response = phoneService.addNumber(phoneAddRequestDto);
+        var response = userOrchestrator.addNumber(phoneAddRequestDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/deleteNumber/{number}")
     public ResponseEntity<Void> deleteNumber(@PathVariable("number") String number) {
-        phoneService.deletePhoneByNumber(number);
+        userOrchestrator.deletePhoneByNumber(number);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/addEmail")
     public ResponseEntity<EmailResponseDto> addEmail(@Valid @RequestBody EmailAddRequestDto emailAddRequestDto) {
-        var response = emailService.addEmail(emailAddRequestDto);
+        var response = userOrchestrator.addEmail(emailAddRequestDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/deleteEmail/{email}")
     public ResponseEntity<Void> deleteEmail(@PathVariable("email") String email) {
-        emailService.deleteEmailByAddress(email);
+        userOrchestrator.deleteEmailByAddress(email);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

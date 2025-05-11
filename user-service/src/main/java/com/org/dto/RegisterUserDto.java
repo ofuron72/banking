@@ -26,4 +26,5 @@ public class RegisterUserDto {
     private String number;
     private String email;
     private BigDecimal initialDeposit;
+    private BigDecimal balance;
 }
