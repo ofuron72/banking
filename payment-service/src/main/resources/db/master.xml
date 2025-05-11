@@ -4,8 +4,7 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <include file="changelog/001_create_table_transactions.xml" relativeToChangelogFile="true"/>
-    <include file="changelog/002_create_table_interest_accruals.xml" relativeToChangelogFile="true"/>
-
+    <include file="changelog/001_create_table_accounts.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/002_create_table_transactions.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

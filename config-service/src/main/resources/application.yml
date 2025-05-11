@@ -1,0 +1,16 @@
+server:
+  port: 8888  # Порт, на котором будет работать config-service
+
+spring:
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:./config-repo
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

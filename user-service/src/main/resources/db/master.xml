@@ -9,4 +9,5 @@
     <include file="changelog/003_create_table_user_phones.xml" relativeToChangelogFile="true"/>
     <include file="changelog/004_create_user_emails.xml" relativeToChangelogFile="true"/>
 
+
 </databaseChangeLog>

@@ -1,10 +1,14 @@
 
 Бановская система состоит из следующих модулей:
 
-- **liga-internship** - родительский модуль
+- **banking** - родительский модуль
 - **dependency_bom** - pom управления зависимостями
-- **kitchen-service** - сервис кухни
-- **waiter-service** - сервис официантов
+- **user-service** - сервис пользователя
+- **payment-service** - сервис переводов
+- **config-service** - сервис конфигураций
+- **discovery-service**
+- **gateway-service**
+
 
 ## Склонировать репозиторий
 
