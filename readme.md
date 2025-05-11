@@ -6,15 +6,19 @@
 - **user-service** - сервис пользователя
 - **payment-service** - сервис переводов
 - **config-service** - сервис конфигураций
-- **discovery-service**
-- **gateway-service**
+- **discovery-service** -eureka
+- **gateway-service** - api gateway
 
 
 ## Склонировать репозиторий
 
 - git clone git@gitlab.com:megagrebec1999/banking-system.git
+- https://github.com/ofuron72/banking.git
 
-## Взаимодействие микросервисов
+## Функционал:
+- Взаимодействие микросервисов реализовано через Kafka
+- Реализован функционал перевода денег с одного счета на другой
+- Реализовано api поиска пользователей по параметрам
 
 ## Стек технологий
 
